@@ -5,11 +5,11 @@ void instructions()
 
     printf("Board positions are as follows: \n");
 
-    printf("\t\t\t  0 |  1  | 2  \n");
+    printf("\t\t\t  1 |  2  | 3  \n");
     printf("\t\t\t--------------\n");
-    printf("\t\t\t  3 | 4  | 5  \n");
+    printf("\t\t\t  4 | 5  | 6  \n");
     printf("\t\t\t--------------\n");
-    printf("\t\t\t  6 | 7  | 8  \n\n");
+    printf("\t\t\t  7 | 8  | 9  \n\n");
     return;
 }
 
@@ -19,7 +19,7 @@ void initialize(char* array)
       char idx;
       for(idx=0; idx < 9; idx++)
       {
-          array[idx] = 'O';
+          array[idx] = NULL;
       }
 }
 
@@ -46,14 +46,33 @@ void insert(char* array, int pos, char move)
     array[idx] = move;
 }
 
+void CheckWinner(char* array)
+{
+      if(array[0] && array[1] && array[2] == 'O' )
+      {
+          int winner = 1;
+      }
+}
+
 int main()
 {
     instructions();
+
     char board[8];
+    int position;
+    char move;
+
     initialize(board);
+
+
+    printf("Enter a position and a move: ");
+    scanf("%d %s", &position, &move);
+    printf("\n");
+    insert(board, position, move);
+
+
+
     display(board);
-    char move = 'X';
-    insert(board, 6, move);
-    display(board);
+
     return 0;
 }
