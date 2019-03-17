@@ -196,21 +196,91 @@ void checkFullBoard(char* array, int* fullBoard)
       return;
 }
 
+struct stack
+{
+      char board[8][8];
+      int top;
+};
+
+void init_stack(struct stack *allBoards)
+{
+    allBoards->top = -1;
+}
+
+void push(struct stack *allBoards, char* board)
+{
+    if(allBoards->top == 8-1)
+    {
+        printf("Stack is full\n");
+        return;
+    }
+    allBoards->top++;
+    allBoards->board[allBoards->top][8] = *board;
+}
+
+char *pop(struct stack *allBoards)
+{
+      char *board[8];
+      if(allBoards->top == -1)
+      {
+          printf("Stack is empty\n");
+          return NULL;
+      }
+      board[8] = &allBoards->board[allBoards->top][8];
+      allBoards->top--;
+      return *board;
+}
+
 int main()
 {
     instructions();
 
     char board[8];
+    struct stack allBoards;
     int winner = 0;
     char winningPlayer;
     int fullBoard = 0;
-    initialize(board);
-    //display(board);
 
+    init_stack(&allBoards);
+    initialize(board);
+
+    char *i = NULL;
 
     while(winner == 0 && fullBoard == 0)
     {
-      addMove(board);
+
+
+      insert(board, 1, 'O');
+      push(&allBoards, &board);
+      display(board);
+      insert(board, 2, 'X');
+      push(&allBoards, &board);
+      display(board);
+      insert(board, 3, 'O');
+      push(&allBoards, &board);
+      display(board);
+      insert(board, 4, 'O');
+      push(&allBoards, &board);
+      display(board);
+      insert(board, 5, 'X');
+      push(&allBoards, &board);
+      display(board);
+      insert(board, 6, 'X');
+      push(&allBoards, &board);
+      display(board);
+      insert(board, 7, 'X');
+      push(&allBoards, &board);
+      display(board);
+      insert(board, 8, 'O');
+      push(&allBoards, &board);
+      display(board);
+      i = pop(&allBoards);
+      if(i) {printf("Item Popped: %c\n", *i);}
+      insert(board, 9, 'X');
+      push(&allBoards, &board);
+
+      //addMove(board);
+      display(board);
       checkFullBoard(board, &fullBoard);
       checkWinner(board, &winner, &winningPlayer);
     }
