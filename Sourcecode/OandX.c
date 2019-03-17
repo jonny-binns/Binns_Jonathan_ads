@@ -2,7 +2,6 @@
 
 void instructions()
 {
-
     printf("Board positions are as follows: \n");
 
     printf("\t\t\t  1 |  2  | 3  \n");
@@ -10,6 +9,10 @@ void instructions()
     printf("\t\t\t  4 | 5  | 6  \n");
     printf("\t\t\t--------------\n");
     printf("\t\t\t  7 | 8  | 9  \n\n");
+
+    printf("To make a move type in the board position followed by your character\n");
+    printf("For Example: 1X\n");
+
     return;
 }
 
@@ -62,7 +65,6 @@ void addMove(char* array)
     scanf("%d%c", &position, &move);
     printf("\n");
 
-    //random char insertion
     if(array[position-1] == NULL)
     {
 		    insert(array, position, move);
@@ -75,76 +77,123 @@ void addMove(char* array)
     }
 }
 
-void checkWinner(char* array, int* winner)
+void checkWinner(char* array, int* winner, char* winningPlayer)
 {
     if(array[0] == 'X' && array[1] == 'X' && array[2] == 'X')
     {
         *winner = 1;
+        *winningPlayer = 'X';
     }
     else if(array[0] == 'O' && array[1] == 'O' && array[2] == 'O')
     {
         *winner = 1;
+        *winningPlayer = 'O';
     }
     else if(array[3] == 'X' && array[4] == 'X' && array[5] == 'X')
     {
         *winner = 1;
+        *winningPlayer = 'X';
     }
     else if(array[3] == 'O' && array[4] == 'O' && array[5] == 'O')
     {
         *winner = 1;
+        *winningPlayer = 'O';
     }
     else if(array[6] == 'X' && array[7] == 'X' && array[8] == 'X')
     {
         *winner = 1;
+        *winningPlayer = 'X';
     }
     else if(array[6] == 'O' && array[7] == 'O' && array[8] == 'O')
     {
         *winner = 1;
+        *winningPlayer = 'O';
     }
     else if(array[0] == 'X' && array[3] == 'X' && array[6] == 'X')
     {
         *winner = 1;
+        *winningPlayer = 'X';
     }
     else if(array[0] == 'O' && array[3] == 'O' && array[6] == 'O')
     {
         *winner = 1;
+        *winningPlayer = 'O';
     }
     else if(array[1] == 'X' && array[4] == 'X' && array[7] == 'X')
     {
         *winner = 1;
+        *winningPlayer = 'X';
     }
     else if(array[1] == 'O' && array[4] == 'O' && array[7] == 'O')
     {
         *winner = 1;
+        *winningPlayer = 'O';
     }
     else if(array[2] == 'X' && array[5] == 'X' && array[8] == 'X')
     {
         *winner = 1;
+        *winningPlayer = 'X';
     }
     else if(array[2] == 'O' && array[5] == 'O' && array[8] == 'O')
     {
         *winner = 1;
+        *winningPlayer = 'O';
     }
     else if(array[0] == 'X' && array[4] == 'X' && array[8] == 'X')
     {
         *winner = 1;
+        *winningPlayer = 'X';
     }
     else if(array[0] == 'O' && array[4] == 'O' && array[8] == 'O')
     {
         *winner = 1;
+        *winningPlayer = 'O';
     }
     else if(array[2] == 'X' && array[4] == 'X' && array[6] == 'X')
     {
         *winner = 1;
+        *winningPlayer = 'X';
     }
     else if(array[2] == 'O' && array[4] == 'O' && array[6] == 'O')
     {
         *winner = 1;
+        *winningPlayer = 'O';
     }
     else
     {
         *winner = 0;
     }
+}
+
+void checkFullBoard(char* array, int* fullBoard)
+{
+      int idx;
+      int movesMade = 0;
+
+
+      for(idx=0; idx<9; idx++)
+      {
+          if(array[idx] != NULL)
+          {
+              movesMade++;
+          }
+          else
+          {
+              return;
+          }
+      }
+
+
+      if(movesMade == 9)
+      {
+          *fullBoard = 1;
+      }
+      else
+      {
+          *fullBoard = 0;
+      }
+
+      return;
 }
 
 int main()
@@ -153,16 +202,35 @@ int main()
 
     char board[8];
     int winner = 0;
+    char winningPlayer;
+    int fullBoard = 0;
     initialize(board);
     //display(board);
 
-    while(winner == 0)
+
+    while(winner == 0 && fullBoard == 0)
     {
       addMove(board);
-      checkWinner(board, &winner);
+      checkFullBoard(board, &fullBoard);
+      checkWinner(board, &winner, &winningPlayer);
     }
 
-    printf("%d\n", winner);
+    if(winner == 1 && fullBoard == 0)
+    {
+      printf("%c Wins\n", winningPlayer);
+    }
+    else if(winner == 0 && fullBoard == 1)
+    {
+        printf("Match has Been a Draw\n");
+    }
+    else if(winner == 1 && fullBoard == 1)
+    {
+      printf("%c Wins\n", winningPlayer);
+    }
+    else
+    {
+        return;
+    }
 
 
     return 0;
