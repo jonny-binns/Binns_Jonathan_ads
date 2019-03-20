@@ -203,7 +203,7 @@ void decideFirstGo(int* firstGo)
 
 struct stack
 {
-      char board[8][8];
+      char board[9][9];
       int top;
 };
 
@@ -263,21 +263,21 @@ int main()
       insert(board, 1, 'O');
       push(&allBoards, &board);
       insert(board, 2, 'X');
-      //push(&allBoards, &board);
+      push(&allBoards, &board);
       insert(board, 3, 'O');
-      //push(&allBoards, &board);
+      push(&allBoards, &board);
       insert(board, 4, 'O');
-      //push(&allBoards, &board);
+      push(&allBoards, &board);
       insert(board, 5, 'X');
-      //push(&allBoards, &board);
+      push(&allBoards, &board);
       insert(board, 6, 'X');
-      //push(&allBoards, &board);
+      push(&allBoards, &board);
       insert(board, 7, 'X');
-      //push(&allBoards, &board);
+      push(&allBoards, &board);
       insert(board, 8, 'O');
-      //push(&allBoards, &board);
+      push(&allBoards, &board);
       insert(board, 9, 'X');
-      //push(&allBoards, &board);
+      push(&allBoards, &board);
       display(board);
 
 
