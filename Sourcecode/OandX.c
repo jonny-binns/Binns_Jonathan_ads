@@ -19,7 +19,7 @@ void instructions()
 
 void initialize(char* array)
 {
-      char idx;
+      int idx;
       for(idx=0; idx < 9; idx++)
       {
           array[idx] = NULL;
@@ -196,39 +196,51 @@ void checkFullBoard(char* array, int* fullBoard)
       return;
 }
 
+void decideFirstGo(int* firstGo)
+{
+    *firstGo = 1;
+}
+
 struct stack
 {
       char board[8][8];
       int top;
 };
 
-void init_stack(struct stack *allBoards)
+void initStack(struct stack *allBoards)
 {
+    int idxColumn=0;
+    while(idxColumn<9)
+    {
+      int idxRow=0;
+      while(idxRow<9)
+        {
+            allBoards->board[idxColumn][idxRow] = NULL;
+            idxRow++;
+        }
+        idxColumn++;
+    }
     allBoards->top = -1;
+}
+
+void displayStack(struct stack *allBoards)
+{
+    int idxColumn;
+    for(idxColumn=0; idxColumn<9;)
+    {
+        display(&allBoards->board[idxColumn]);
+        idxColumn++;
+    }
 }
 
 void push(struct stack *allBoards, char* board)
 {
-    if(allBoards->top == 8-1)
-    {
-        printf("Stack is full\n");
-        return;
-    }
     allBoards->top++;
-    allBoards->board[allBoards->top][8] = *board;
-}
-
-char *pop(struct stack *allBoards)
-{
-      char *board[8];
-      if(allBoards->top == -1)
-      {
-          printf("Stack is empty\n");
-          return NULL;
-      }
-      board[8] = &allBoards->board[allBoards->top][8];
-      allBoards->top--;
-      return *board;
+    int idxRow;
+    for(idxRow=0;idxRow<9;idxRow++)
+    {
+        allBoards->board[allBoards->top][idxRow] = board[idxRow];
+    }
 }
 
 int main()
@@ -236,15 +248,13 @@ int main()
     instructions();
 
     char board[8];
-    struct stack allBoards;
     int winner = 0;
     char winningPlayer;
     int fullBoard = 0;
-
-    init_stack(&allBoards);
     initialize(board);
 
-    char *i = NULL;
+    struct stack allBoards;
+    initStack(&allBoards);
 
     while(winner == 0 && fullBoard == 0)
     {
@@ -252,38 +262,35 @@ int main()
 
       insert(board, 1, 'O');
       push(&allBoards, &board);
-      display(board);
       insert(board, 2, 'X');
-      push(&allBoards, &board);
-      display(board);
+      //push(&allBoards, &board);
       insert(board, 3, 'O');
-      push(&allBoards, &board);
-      display(board);
+      //push(&allBoards, &board);
       insert(board, 4, 'O');
-      push(&allBoards, &board);
-      display(board);
+      //push(&allBoards, &board);
       insert(board, 5, 'X');
-      push(&allBoards, &board);
-      display(board);
+      //push(&allBoards, &board);
       insert(board, 6, 'X');
-      push(&allBoards, &board);
-      display(board);
+      //push(&allBoards, &board);
       insert(board, 7, 'X');
-      push(&allBoards, &board);
-      display(board);
+      //push(&allBoards, &board);
       insert(board, 8, 'O');
-      push(&allBoards, &board);
-      display(board);
-      i = pop(&allBoards);
-      if(i) {printf("Item Popped: %c\n", *i);}
+      //push(&allBoards, &board);
       insert(board, 9, 'X');
-      push(&allBoards, &board);
+      //push(&allBoards, &board);
+      display(board);
+
+
 
       //addMove(board);
-      display(board);
+      //display(board);
       checkFullBoard(board, &fullBoard);
       checkWinner(board, &winner, &winningPlayer);
+
     }
+
+    printf("Stack Boards: \n");
+    displayStack(&allBoards);
 
     if(winner == 1 && fullBoard == 0)
     {
