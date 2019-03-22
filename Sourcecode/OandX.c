@@ -17,37 +17,37 @@ void instructions()
 }
 
 
-void initialize(char* array)
+void initialize(char* board)
 {
       int idx;
       for(idx=0; idx < 9; idx++)
       {
-          array[idx] = NULL;
+          board[idx] = NULL;
       }
 }
 
-void display(char* array)
+void display(char* board)
 {
     printf("\n\n");
 
-    printf("\t\t\t  %c | %c  | %c  \n", array[0], array[1], array[2]);
+    printf("\t\t\t  %c | %c  | %c  \n", board[0], board[1], board[2]);
     printf("\t\t\t--------------\n");
-    printf("\t\t\t  %c | %c  | %c  \n", array[3], array[4], array[5]);
+    printf("\t\t\t  %c | %c  | %c  \n", board[3], board[4], board[5]);
     printf("\t\t\t--------------\n");
-    printf("\t\t\t  %c | %c  | %c  \n\n", array[6], array[7], array[8]);
+    printf("\t\t\t  %c | %c  | %c  \n\n", board[6], board[7], board[8]);
     return;
 }
 
-void insert(char* array, int pos, char move)
+void insert(char* board, int pos, char move)
 {
     int idx;
     if(move == 'X' || move == 'O')
     {
         for(idx = 8; idx>= pos; idx--)
         {
-            array[idx] = array[idx];
+            board[idx] = board[idx];
         }
-            array[idx] = move;
+            board[idx] = move;
     }
     else
     {
@@ -56,7 +56,7 @@ void insert(char* array, int pos, char move)
     }
 }
 
-void addMove(char* array)
+void addMove(char* board)
 {
     int position;
     char move;
@@ -65,10 +65,10 @@ void addMove(char* array)
     scanf("%d%c", &position, &move);
     printf("\n");
 
-    if(array[position-1] == NULL)
+    if(board[position-1] == NULL)
     {
-		    insert(array, position, move);
-        display(array);
+		    insert(board, position, move);
+        display(board);
     }
     else
     {
@@ -77,84 +77,84 @@ void addMove(char* array)
     }
 }
 
-void checkWinner(char* array, int* winner, char* winningPlayer)
+void checkWinner(char* board, int* winner, char* winningPlayer)
 {
-    if(array[0] == 'X' && array[1] == 'X' && array[2] == 'X')
+    if(board[0] == 'X' && board[1] == 'X' && board[2] == 'X')
     {
         *winner = 1;
         *winningPlayer = 'X';
     }
-    else if(array[0] == 'O' && array[1] == 'O' && array[2] == 'O')
+    else if(board[0] == 'O' && board[1] == 'O' && board[2] == 'O')
     {
         *winner = 1;
         *winningPlayer = 'O';
     }
-    else if(array[3] == 'X' && array[4] == 'X' && array[5] == 'X')
+    else if(board[3] == 'X' && board[4] == 'X' && board[5] == 'X')
     {
         *winner = 1;
         *winningPlayer = 'X';
     }
-    else if(array[3] == 'O' && array[4] == 'O' && array[5] == 'O')
+    else if(board[3] == 'O' && board[4] == 'O' && board[5] == 'O')
     {
         *winner = 1;
         *winningPlayer = 'O';
     }
-    else if(array[6] == 'X' && array[7] == 'X' && array[8] == 'X')
+    else if(board[6] == 'X' && board[7] == 'X' && board[8] == 'X')
     {
         *winner = 1;
         *winningPlayer = 'X';
     }
-    else if(array[6] == 'O' && array[7] == 'O' && array[8] == 'O')
+    else if(board[6] == 'O' && board[7] == 'O' && board[8] == 'O')
     {
         *winner = 1;
         *winningPlayer = 'O';
     }
-    else if(array[0] == 'X' && array[3] == 'X' && array[6] == 'X')
+    else if(board[0] == 'X' && board[3] == 'X' && board[6] == 'X')
     {
         *winner = 1;
         *winningPlayer = 'X';
     }
-    else if(array[0] == 'O' && array[3] == 'O' && array[6] == 'O')
+    else if(board[0] == 'O' && board[3] == 'O' && board[6] == 'O')
     {
         *winner = 1;
         *winningPlayer = 'O';
     }
-    else if(array[1] == 'X' && array[4] == 'X' && array[7] == 'X')
+    else if(board[1] == 'X' && board[4] == 'X' && board[7] == 'X')
     {
         *winner = 1;
         *winningPlayer = 'X';
     }
-    else if(array[1] == 'O' && array[4] == 'O' && array[7] == 'O')
+    else if(board[1] == 'O' && board[4] == 'O' && board[7] == 'O')
     {
         *winner = 1;
         *winningPlayer = 'O';
     }
-    else if(array[2] == 'X' && array[5] == 'X' && array[8] == 'X')
+    else if(board[2] == 'X' && board[5] == 'X' && board[8] == 'X')
     {
         *winner = 1;
         *winningPlayer = 'X';
     }
-    else if(array[2] == 'O' && array[5] == 'O' && array[8] == 'O')
+    else if(board[2] == 'O' && board[5] == 'O' && board[8] == 'O')
     {
         *winner = 1;
         *winningPlayer = 'O';
     }
-    else if(array[0] == 'X' && array[4] == 'X' && array[8] == 'X')
+    else if(board[0] == 'X' && board[4] == 'X' && board[8] == 'X')
     {
         *winner = 1;
         *winningPlayer = 'X';
     }
-    else if(array[0] == 'O' && array[4] == 'O' && array[8] == 'O')
+    else if(board[0] == 'O' && board[4] == 'O' && board[8] == 'O')
     {
         *winner = 1;
         *winningPlayer = 'O';
     }
-    else if(array[2] == 'X' && array[4] == 'X' && array[6] == 'X')
+    else if(board[2] == 'X' && board[4] == 'X' && board[6] == 'X')
     {
         *winner = 1;
         *winningPlayer = 'X';
     }
-    else if(array[2] == 'O' && array[4] == 'O' && array[6] == 'O')
+    else if(board[2] == 'O' && board[4] == 'O' && board[6] == 'O')
     {
         *winner = 1;
         *winningPlayer = 'O';
@@ -165,7 +165,7 @@ void checkWinner(char* array, int* winner, char* winningPlayer)
     }
 }
 
-void checkFullBoard(char* array, int* fullBoard)
+void checkFullBoard(char* board, int* fullBoard)
 {
       int idx;
       int movesMade = 0;
@@ -173,7 +173,7 @@ void checkFullBoard(char* array, int* fullBoard)
 
       for(idx=0; idx<9; idx++)
       {
-          if(array[idx] != NULL)
+          if(board[idx] != NULL)
           {
               movesMade++;
           }
@@ -203,7 +203,7 @@ void decideFirstGo(int* firstGo)
 
 struct stack
 {
-      char board[9][9s];
+      char board[9][9];
       int top;
 };
 
@@ -235,7 +235,7 @@ void displayStack(struct stack *allBoards)
 
 void push(struct stack *allBoards, char* board)
 {
-    printf("%d\n", allBoards->top);
+    //printf("%d\n", allBoards->top);
     allBoards->top++;
     int idxRow;
     for(idxRow=0;idxRow<9;idxRow++)
@@ -247,90 +247,135 @@ void push(struct stack *allBoards, char* board)
 void pop(struct stack *allBoards, char *board)
 {
     int idxRow;
-    //printf("%d\n", allBoards->top);
-    //display(allBoards->board[allBoards->top]);
+    allBoards->top--;
     for(idxRow=0;idxRow<9;idxRow++)
     {
         board[idxRow] = allBoards->board[allBoards->top][idxRow];
     }
     display(board);
-    allBoards->top--;
+    //allBoards->top--;
 }
 
 int main()
 {
-    instructions();
+    //instructions();
 
     char board[8];
+    struct stack allBoards;
     int winner = 0;
     char winningPlayer;
     int fullBoard = 0;
+    int mainMenu = 0;
+    int gameMenu = 0;
     initialize(board);
-
-    struct stack allBoards;
     initStack(&allBoards);
 
-    while(winner == 0 && fullBoard == 0)
+    printf("****MAIN MENU****\n");
+    printf("To See Instructions, Enter 1.\n");
+    printf("To Play The Game, Enter 2.\n");
+    printf("To Replay An Old Game. Enter 3\n");
+    printf("To Exit Enter Any Other Character\n");
+    scanf("%d", &mainMenu);
+
+    if(mainMenu == 1)
     {
-
-      insert(board, 1, 'O');
-      push(&allBoards, board);
-      insert(board, 2, 'X');
-      push(&allBoards, board);
-      insert(board, 3, 'O');
-      push(&allBoards, board);
-      insert(board, 4, 'O');
-      push(&allBoards, board);
-      insert(board, 5, 'X');
-      push(&allBoards, board);
-      insert(board, 6, 'X');
-      push(&allBoards, board);
-      insert(board, 7, 'X');
-      push(&allBoards, board);
-      insert(board, 8, 'O');
-      push(&allBoards, board);
-      insert(board, 9, 'X');
-      push(&allBoards, board);
-      display(board);
-
-      /*
-      addMove(board);
-      push(&allBoards, &board);
-      //display(board);
-      checkFullBoard(board, &fullBoard);
-      checkWinner(board, &winner, &winningPlayer);
-      */
+        instructions();
+        printf("****MAIN MENU****\n");
+        printf("To See Instructions, Enter 1.\n");
+        printf("To Play The Game, Enter 2.\n");
+        printf("To Replay An Old Game. Enter 3\n");
+        printf("To Exit Enter Any Other Character\n");
+        scanf("%d", &mainMenu);
     }
+    else if(mainMenu == 2)
+    {
+        while(winner == 0 && fullBoard == 0)
+        {
+            /*
+            insert(board, 1, 'O');
+            push(&allBoards, board);
+            insert(board, 2, 'X');
+            push(&allBoards, board);
+            insert(board, 3, 'O');
+            push(&allBoards, board);
+            insert(board, 4, 'O');
+            push(&allBoards, board);
+            insert(board, 5, 'X');
+            push(&allBoards, board);
+            insert(board, 6, 'X');
+            push(&allBoards, board);
+            insert(board, 7, 'X');
+            push(&allBoards, board);
+            insert(board, 8, 'O');
+            push(&allBoards, board);
+            insert(board, 9, 'X');
+            push(&allBoards, board);
+            display(board);
+            */
+            printf("****GAME MENU****\n");
+            printf("To Add A Move, Press 1\n");
+            printf("To Undo A Move, Press 2\n");
+            printf("To See The Instructions, Press 3\n");
+            scanf("%d", &gameMenu);
 
-    printf("Stack Boards: \n");
-    //displayStack(&allBoards);
-    pop(&allBoards, board);
-    pop(&allBoards, board);
-    pop(&allBoards, board);
-    pop(&allBoards, board);
-    pop(&allBoards, board);
-    pop(&allBoards, board);
-    pop(&allBoards, board);
-    pop(&allBoards, board);
-    pop(&allBoards, board);
+            if(gameMenu == 1)
+            {
+                addMove(board);
+                push(&allBoards, board);
+                //display(board);
+                checkFullBoard(board, &fullBoard);
+                checkWinner(board, &winner, &winningPlayer);
+            }
+            else if(gameMenu == 2)
+            {
+                pop(&allBoards, board);
+            }
+            else if(gameMenu == 3)
+            {
+                instructions();
+            }
+            else
+            {
+                return;
+            }
 
-    if(winner == 1 && fullBoard == 0)
-    {
-      printf("%c Wins\n", winningPlayer);
-    }
-    else if(winner == 0 && fullBoard == 1)
-    {
-        printf("Match has Been a Draw\n");
-    }
-    else if(winner == 1 && fullBoard == 1)
-    {
-      printf("%c Wins\n", winningPlayer);
+        }
+
+        /*
+        printf("Stack Boards: \n");
+        //displayStack(&allBoards);
+        pop(&allBoards, board);
+        pop(&allBoards, board);
+        pop(&allBoards, board);
+        pop(&allBoards, board);
+        pop(&allBoards, board);
+        pop(&allBoards, board);
+        pop(&allBoards, board);
+        pop(&allBoards, board);
+        pop(&allBoards, board);
+        */
+
+        if(winner == 1 && fullBoard == 0)
+        {
+            printf("%c Wins\n", winningPlayer);
+        }
+        else if(winner == 0 && fullBoard == 1)
+        {
+            printf("Match has Been a Draw\n");
+        }
+        else if(winner == 1 && fullBoard == 1)
+        {
+            printf("%c Wins\n", winningPlayer);
+        }
+        else
+        {
+          return;
+        }
     }
     else
     {
-        return;
+      return;
     }
-
 
     return 0;
 }
