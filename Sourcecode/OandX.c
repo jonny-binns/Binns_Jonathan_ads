@@ -29,7 +29,6 @@ void initialize(char* board)
 void display(char* board)
 {
     printf("\n\n");
-
     printf("\t\t\t  %c | %c  | %c  \n", board[0], board[1], board[2]);
     printf("\t\t\t--------------\n");
     printf("\t\t\t  %c | %c  | %c  \n", board[3], board[4], board[5]);
@@ -256,10 +255,51 @@ void pop(struct stack *allBoards, char *board)
     //allBoards->top--;
 }
 
+void writeFile(struct stack *allBoards)
+{
+      FILE * file;
+      file = fopen("game.txt", "w");
+      int idxColumn;
+
+      fprintf(file, "Game test\n");
+      for(idxColumn = 0; idxColumn<9; idxColumn++)
+      {
+          fprintf(file, "Board %d\n", idxColumn);
+          fprintf(file, "\n");
+          fprintf(file, "\t\t\t  %c | %c  | %c  \n", allBoards->board[idxColumn][0], allBoards->board[idxColumn][1], allBoards->board[idxColumn][2]);
+          fprintf(file, "\t\t\t--------------\n");
+          fprintf(file, "\t\t\t  %c | %c  | %c  \n", allBoards->board[idxColumn][3], allBoards->board[idxColumn][4], allBoards->board[idxColumn][5]);
+          fprintf(file, "\t\t\t--------------\n");
+          fprintf(file, "\t\t\t  %c | %c  | %c  \n", allBoards->board[idxColumn][6], allBoards->board[idxColumn][7], allBoards->board[idxColumn][8]);
+          fprintf(file, "\n");
+      }
+      fclose(file);
+}
+
+void readFile()
+{
+    FILE * file;
+    char s;
+
+    file = fopen("game.txt", "r");
+
+    if(file==NULL)
+    {
+        printf("Cant open file\n");
+    }
+    else
+    {
+        while(s!=EOF)
+        {
+            s = getc(file);
+            printf("%c", s);
+        }
+    }
+    fclose(file);
+}
+
 int main()
 {
-    //instructions();
-
     char board[8];
     struct stack allBoards;
     int winner = 0;
@@ -287,31 +327,11 @@ int main()
         printf("To Exit Enter Any Other Character\n");
         scanf("%d", &mainMenu);
     }
-    else if(mainMenu == 2)
+
+    if(mainMenu == 2)
     {
         while(winner == 0 && fullBoard == 0)
         {
-            /*
-            insert(board, 1, 'O');
-            push(&allBoards, board);
-            insert(board, 2, 'X');
-            push(&allBoards, board);
-            insert(board, 3, 'O');
-            push(&allBoards, board);
-            insert(board, 4, 'O');
-            push(&allBoards, board);
-            insert(board, 5, 'X');
-            push(&allBoards, board);
-            insert(board, 6, 'X');
-            push(&allBoards, board);
-            insert(board, 7, 'X');
-            push(&allBoards, board);
-            insert(board, 8, 'O');
-            push(&allBoards, board);
-            insert(board, 9, 'X');
-            push(&allBoards, board);
-            display(board);
-            */
             printf("****GAME MENU****\n");
             printf("To Add A Move, Press 1\n");
             printf("To Undo A Move, Press 2\n");
@@ -341,36 +361,30 @@ int main()
 
         }
 
-        /*
-        printf("Stack Boards: \n");
-        //displayStack(&allBoards);
-        pop(&allBoards, board);
-        pop(&allBoards, board);
-        pop(&allBoards, board);
-        pop(&allBoards, board);
-        pop(&allBoards, board);
-        pop(&allBoards, board);
-        pop(&allBoards, board);
-        pop(&allBoards, board);
-        pop(&allBoards, board);
-        */
-
         if(winner == 1 && fullBoard == 0)
         {
             printf("%c Wins\n", winningPlayer);
+            writeFile(&allBoards);
         }
         else if(winner == 0 && fullBoard == 1)
         {
             printf("Match has Been a Draw\n");
+            writeFile(&allBoards);
         }
         else if(winner == 1 && fullBoard == 1)
         {
             printf("%c Wins\n", winningPlayer);
+            writeFile(&allBoards);
         }
         else
         {
           return;
         }
+    }
+
+    if(mainMenu == 3)
+    {
+        readFile();
     }
     else
     {
