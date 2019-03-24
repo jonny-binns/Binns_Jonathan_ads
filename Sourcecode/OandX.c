@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 
 void instructions()
 {
@@ -169,7 +170,6 @@ void checkFullBoard(char* board, int* fullBoard)
       int idx;
       int movesMade = 0;
 
-
       for(idx=0; idx<9; idx++)
       {
           if(board[idx] != NULL)
@@ -181,7 +181,6 @@ void checkFullBoard(char* board, int* fullBoard)
               return;
           }
       }
-
 
       if(movesMade == 9)
       {
@@ -195,10 +194,6 @@ void checkFullBoard(char* board, int* fullBoard)
       return;
 }
 
-void decideFirstGo(int* firstGo)
-{
-    *firstGo = 1;
-}
 
 struct stack
 {
@@ -258,8 +253,15 @@ void pop(struct stack *allBoards, char *board)
 void writeFile(struct stack *allBoards)
 {
       FILE * file;
-      file = fopen("game.txt", "w");
       int idxColumn;
+      time_t seconds;
+
+      seconds = time(NULL);
+      char fileName[30];
+      sprintf(fileName, "game%lld.txt", seconds);
+      printf("Game has been saved as: %s\n", fileName);
+      file = fopen(fileName, "w");
+
 
       fprintf(file, "Game test\n");
       for(idxColumn = 0; idxColumn<9; idxColumn++)
@@ -280,8 +282,12 @@ void readFile()
 {
     FILE * file;
     char s;
+    char fileName[30];
 
-    file = fopen("game.txt", "r");
+    printf("Enter The File Name Of The Game You Would Like To Replay (include .txt): ");
+    scanf("%s", fileName);
+    file = fopen(fileName, "r");
+    //file = fopen("game.txt", "r");
 
     if(file==NULL)
     {
