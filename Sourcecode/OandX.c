@@ -263,7 +263,7 @@ void writeFile(struct stack *allBoards)
       file = fopen(fileName, "w");
 
 
-      fprintf(file, "Game test\n");
+      //fprintf(file, "Game test\n");
       for(idxColumn = 0; idxColumn<9; idxColumn++)
       {
           fprintf(file, "Board %d\n", idxColumn);
