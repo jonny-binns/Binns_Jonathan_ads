@@ -15,7 +15,7 @@ void instructions()
     printf("\t\t\t  7 | 8  | 9  \n\n");
 
     printf("To make a move type in the board position followed by your character\n");
-    printf("For Example: 1X\n");
+    printf("For Example: 1X\n\n");
 
     return;
 }
@@ -439,6 +439,8 @@ int main()
     char board[8];
     //creates a stack of all the boards
     struct stack allBoards;
+    //creats a stack for redoing moves
+    struct stack redo;
     //creats an int for the winner flag
     int winner = 0;
     //creates a char for the winning player
@@ -453,6 +455,8 @@ int main()
     initialize(board);
     //initializes the stack
     initStack(&allBoards);
+    //initializes the redo stack
+    initStack(&redo);
 
     //code for the main menu
     printf("****MAIN MENU****\n");
@@ -486,7 +490,10 @@ int main()
             printf("****GAME MENU****\n");
             printf("To Add A Move, Press 1\n");
             printf("To Undo A Move, Press 2\n");
-            printf("To See The Instructions, Press 3\n");
+            printf("To Redo A Move, Press 3\n");
+            printf("WARNING: the redo feature will crash if it is used more than 9 times, errors may also occur if you attempt to undo a re-done move\n");
+            printf("To See The Instructions, Press 4\n");
+
             //reads in user choice in the game menu
             scanf("%d", &gameMenu);
             //if game menu selection is 1
@@ -496,6 +503,8 @@ int main()
                 addMove(board);
                 //pushes the board to the stack of all boards
                 push(&allBoards, board);
+                //adds to the redo stack
+                push(&redo, board);
                 //checks if the board is full
                 checkFullBoard(board, &fullBoard);
                 //checks if there has been a winner
@@ -506,9 +515,16 @@ int main()
             {
                 //pops the last board from the stack and sets it as the game board that is in play
                 pop(&allBoards, board);
+                //pushes to redo stack
+                push(&redo, board);
+            }
+            else if(gameMenu == 3)
+            {
+                //pops the last board from the stack and sets it as the game board that is in play
+                pop(&redo, board);
             }
             //if the user inputs 3
-            else if(gameMenu == 3)
+            else if(gameMenu == 4)
             {
                 //displays the instructions
                 instructions();
